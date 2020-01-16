@@ -8,6 +8,13 @@ using System.Windows;
 
 namespace EjemploMVVM
 {
+    public enum Accion
+    {
+        Abrir,
+        Editar
+    }
+
+
     /// <summary>
     /// Lógica de interacción para App.xaml
     /// </summary>

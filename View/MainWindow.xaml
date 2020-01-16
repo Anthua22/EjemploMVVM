@@ -1,0 +1,58 @@
+﻿<!--TODO: centrar cabeceras de columnas y alinear a la derecha las fechas y cantidades-->
+    
+    <Window x:Class="EjemploMVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EjemploMVVM"
+        mc:Ignorable="d"
+        Language="es-ES"
+        Title="MVVM" Height="450" Width="800" Icon="../Assets/database_link.ico">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Delete"
+                        Executed="DeleteCommand_Executed"
+                        CanExecute="DeleteCommand_CanExecute"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.New"
+                        Executed="NewCommand_Executed"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Open"
+                        Executed="OpenCommand_Executed"
+                        CanExecute="OpenCommand_CanExecute"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Find"
+                        Executed="FindCommand_Executed"></CommandBinding>
+
+    </Window.CommandBindings>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                <Label>Cliente</Label>
+                <TextBox Width="200" Margin="0,5,0,5" VerticalContentAlignment="Center" Text="{Binding ClienteFiltro}"></TextBox>
+                <Button Command="ApplicationCommands.Find">Filtrar</Button>
+            </StackPanel>
+            <Button DockPanel.Dock="Right" Command="ApplicationCommands.New">Nuevo</Button>
+        </DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="ApplicationCommands.Open">Modificar</Button>
+            <Button Command="ApplicationCommands.Delete">Eliminar</Button>
+        </StackPanel>
+        <DataGrid x:Name="PedidosDataGrid"  SelectedItem="{Binding PedidoSeleccionado}" ItemsSource="{Binding ListaPedidos.View}" SelectionMode="Single" SelectionUnit="FullRow" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Identificador" Binding="{Binding id}"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="*" Header="Cliente">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding CLIENTE.nombre}"></Run>
+                                <Run Text="{Binding CLIENTE.apellido}"></Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="*" Header="Fecha" Binding="{Binding fecha_pedido,StringFormat=d}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Nº artículos" Binding="{Binding numero_articulos}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Importe" Binding="{Binding importe, StringFormat=C}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn  Width="*" Header="¿Enviado?" Binding="{Binding enviado}"></DataGridCheckBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>
